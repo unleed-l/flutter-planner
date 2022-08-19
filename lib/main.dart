@@ -23,8 +23,8 @@ class PlannerApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
-          primary: Colors.black,
-          secondary: Colors.amber,
+          primary: Colors.amber,
+          secondary: Colors.black,
         ),
         textTheme: tema.textTheme.copyWith(
           headline6: const TextStyle(
@@ -33,12 +33,19 @@ class PlannerApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
+          headline5: const TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+          ),
         ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
       ),
@@ -54,19 +61,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Novo Tênis de Corrida',
+    //   value: 310.76,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Conta de Luz',
+    //   value: 211.30,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   _addTransaction(String title, double value) {
@@ -114,7 +121,10 @@ class MyHomePageState extends State<MyHomePage> {
               child: Card(
                 color: Theme.of(context).colorScheme.secondary,
                 elevation: 5,
-                child: const Text('Gráfico'),
+                child: Text(
+                  'Gráfico',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
             ),
             TransactionList(transactions: _transactions),
@@ -125,7 +135,7 @@ class MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
         onPressed: () => _openTransactionFormModal(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
