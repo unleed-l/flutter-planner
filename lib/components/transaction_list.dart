@@ -4,13 +4,17 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  const TransactionList({Key? key, required this.transactions})
-      : super(key: key);
+  final void Function(String id) onDelete;
+  const TransactionList({
+    Key? key,
+    required this.transactions,
+    required this.onDelete,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
+      height: 430,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -34,52 +38,49 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 final tr = transactions[index];
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.secondary,
-                            width: 2,
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'R\$ ${tr.value.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            tr.title,
-                            style: Theme.of(context).textTheme.headline6,
-                            // style: const TextStyle(
-                            //   fontSize: 16,
-                            //   fontWeight: FontWeight.bold,
-                            // ),
-                          ),
-                          Text(
-                            DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br')
-                                .format(tr.date),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            'R\$${tr.value}',
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontFamily: 'Quicksand',
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 112, 99, 99),
+                              color: Colors.black,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ],
+                    ),
+                    title: Text(
+                      tr.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br')
+                          .format(tr.date),
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => onDelete(tr.id),
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                 );
               },

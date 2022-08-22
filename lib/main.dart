@@ -28,6 +28,9 @@ class PlannerApp extends StatelessWidget {
           secondary: Colors.black,
         ),
         textTheme: tema.textTheme.copyWith(
+          button: const TextStyle(
+            color: Colors.black,
+          ),
           headline6: const TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
@@ -39,6 +42,12 @@ class PlannerApp extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.normal,
             color: Colors.white,
+          ),
+          headline4: const TextStyle(
+            fontFamily: 'Quicksand',
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 102, 102, 102),
           ),
         ),
         appBarTheme: const AppBarTheme(
@@ -62,20 +71,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo Tênis de Corrida',
-      value: 310.76,
-      date: DateTime.now().subtract(const Duration(days: 3)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now().subtract(const Duration(days: 4)),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -85,12 +81,12 @@ class MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
@@ -98,6 +94,14 @@ class MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
+  }
+
+  _deleteTransaction(String id) {
+    setState(
+      () {
+        _transactions.removeWhere((tr) => tr.id == id);
+      },
+    );
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -113,6 +117,11 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            10,
+          ),
+        ),
         title: const Text('Despesas Pessoais'),
         actions: <Widget>[
           IconButton(
@@ -126,7 +135,10 @@ class MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(transactions: _transactions),
+            TransactionList(
+              transactions: _transactions,
+              onDelete: _deleteTransaction,
+            ),
           ],
         ),
       ),
