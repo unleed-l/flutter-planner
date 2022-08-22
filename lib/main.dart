@@ -31,29 +31,29 @@ class PlannerApp extends StatelessWidget {
           button: const TextStyle(
             color: Colors.black,
           ),
-          headline6: const TextStyle(
+          headline6: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 18,
+            fontSize: 18 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
-          headline5: const TextStyle(
+          headline5: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 14,
+            fontSize: 14 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.normal,
             color: Colors.white,
           ),
-          headline4: const TextStyle(
+          headline4: TextStyle(
             fontFamily: 'Quicksand',
-            fontSize: 14,
+            fontSize: 14 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 102, 102, 102),
+            color: const Color.fromARGB(255, 102, 102, 102),
           ),
         ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 20,
+            fontSize: 20 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -115,29 +115,41 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            10,
-          ),
+    final appBar = AppBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          10,
         ),
-        title: const Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          ),
-        ],
       ),
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context),
+        ),
+      ],
+    );
+
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(
-              transactions: _transactions,
-              onDelete: _deleteTransaction,
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(_recentTransactions),
+            ),
+            SizedBox(
+              height: availableHeight * 0.7,
+              child: TransactionList(
+                transactions: _transactions,
+                onDelete: _deleteTransaction,
+              ),
             ),
           ],
         ),
