@@ -48,11 +48,17 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
+    final themeContext = Theme.of(context);
+    return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: 10 + MediaQuery.of(context).viewInsets.bottom),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             TextField(
               controller: _titleController,
@@ -78,7 +84,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       _selectedDate == null
                           ? 'Nenhuma data selecionada!'
                           : 'Data Selecionada: ${DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br').format(_selectedDate!)}',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: themeContext.textTheme.headline4,
                     ),
                   ),
                 ],
@@ -91,8 +97,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   onPressed: _showDatePicker,
                   child: Text(
                     'Selecionar data',
-                    style: Theme.of(context).textTheme.button, //TextStyle(
-                    //   color: Theme.of(context).colorScheme.primary,
+                    style: themeContext.textTheme.button, //TextStyle(
+                    //   color: themeContext.colorScheme.primary,
                     //   fontWeight: FontWeight.bold,
                     // ),
                   ),
@@ -101,7 +107,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   onPressed: _submitForm,
                   child: Text(
                     'Nova Transação',
-                    style: Theme.of(context).textTheme.button,
+                    style: themeContext.textTheme.button,
                   ),
                 ),
               ],

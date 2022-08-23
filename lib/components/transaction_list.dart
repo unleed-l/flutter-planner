@@ -13,23 +13,28 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeContext = Theme.of(context);
     return transactions.isEmpty
-        ? Column(
-            children: <Widget>[
-              const SizedBox(height: 50),
-              Text(
-                'Nenhuma transação cadastrada!',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 200,
-                child: Image.asset(
-                  'assets/images/waiting.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
+        ? LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                children: <Widget>[
+                  const SizedBox(height: 20),
+                  Text(
+                    'Nenhuma transação cadastrada!',
+                    style: themeContext.textTheme.headline6,
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            },
           )
         : ListView.builder(
             itemCount: transactions.length,
@@ -48,7 +53,7 @@ class TransactionList extends StatelessWidget {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: themeContext.colorScheme.primary,
                     radius: 30,
                     child: Padding(
                       padding: const EdgeInsets.all(6),
@@ -67,18 +72,32 @@ class TransactionList extends StatelessWidget {
                   ),
                   title: Text(
                     tr.title,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: themeContext.textTheme.headline6,
                   ),
                   subtitle: Text(
                     DateFormat(DateFormat.YEAR_MONTH_DAY, 'pt_Br')
                         .format(tr.date),
-                    style: Theme.of(context).textTheme.headline4,
+                    style: themeContext.textTheme.headline4,
                   ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => onDelete(tr.id),
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 480
+                      ? TextButton.icon(
+                          onPressed: () => onDelete(tr.id),
+                          icon: Icon(
+                            Icons.delete,
+                            color: themeContext.colorScheme.secondary,
+                          ),
+                          label: Text(
+                            'Excluir',
+                            style: TextStyle(
+                              color: themeContext.colorScheme.secondary,
+                            ),
+                          ),
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => onDelete(tr.id),
+                          color: themeContext.colorScheme.secondary,
+                        ),
                 ),
               );
             },
