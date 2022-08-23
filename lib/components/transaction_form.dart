@@ -81,22 +81,22 @@ class _TransactionFormState extends State<TransactionForm> {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),
-                  TextButton(
-                    onPressed: _showDatePicker,
-                    child: Text(
-                      'Selecionar data',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                ElevatedButton(
+                  onPressed: _showDatePicker,
+                  child: Text(
+                    'Selecionar data',
+                    style: Theme.of(context).textTheme.button, //TextStyle(
+                    //   color: Theme.of(context).colorScheme.primary,
+                    //   fontWeight: FontWeight.bold,
+                    // ),
+                  ),
+                ),
                 ElevatedButton(
                   onPressed: _submitForm,
                   child: Text(

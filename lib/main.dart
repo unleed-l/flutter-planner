@@ -20,7 +20,7 @@ class PlannerApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      //  supportedLocales: [Locale('pt', 'BR')],
+      // supportedLocales: const [Locale('pt', 'BR')],
       home: const MyHomePage(),
       theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
@@ -30,30 +30,31 @@ class PlannerApp extends StatelessWidget {
         textTheme: tema.textTheme.copyWith(
           button: const TextStyle(
             color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
-          headline6: TextStyle(
+          headline6: const TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 18 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
-          headline5: TextStyle(
+          headline5: const TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 14 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 14,
             fontWeight: FontWeight.normal,
             color: Colors.white,
           ),
-          headline4: TextStyle(
+          headline4: const TextStyle(
             fontFamily: 'Quicksand',
-            fontSize: 14 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 102, 102, 102),
+            color: Color.fromARGB(255, 102, 102, 102),
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -141,11 +142,11 @@ class MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
-              height: availableHeight * 0.3,
+              height: availableHeight * 0.30,
               child: Chart(_recentTransactions),
             ),
             SizedBox(
-              height: availableHeight * 0.7,
+              height: availableHeight * 0.70,
               child: TransactionList(
                 transactions: _transactions,
                 onDelete: _deleteTransaction,
