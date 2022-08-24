@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 import 'components/chart.dart';
@@ -16,6 +17,11 @@ class PlannerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const MyHomePage(),
       theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
@@ -26,6 +32,12 @@ class PlannerApp extends StatelessWidget {
           headline6: const TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          headline4: const TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
